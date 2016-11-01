@@ -1,0 +1,49 @@
+doctype html
+html(ng-app='adminApp')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    // Page title set in pageTitle directive
+    title(page-title='')
+    // Bootstrap
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    // Font awesome
+    link(href='font-awesome/css/font-awesome.css', rel='stylesheet')
+    // Main Inspinia CSS files
+    link(href='css/animate.css', rel='stylesheet')
+    link#loadBefore(href='css/style.css', rel='stylesheet')
+  body.mini-navbar(ng-controller='MainCtrl as main')
+    // Main view
+    #wrapper
+      // <div ng-view></div>
+      div(ui-view='')
+    // jQuery and Bootstrap
+    script(src='js/jquery/jquery-2.1.1.min.js')
+    script(src='js/plugins/jquery-ui/jquery-ui.js')
+    script(src='js/bootstrap/bootstrap.min.js')
+    // MetsiMenu
+    script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+    // SlimScroll
+    script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+    // Peace JS
+    script(src='js/plugins/pace/pace.min.js')
+    // Custom and plugin javascript
+    script(src='js/inspinia.js')
+    // Main Angular scripts
+    script(src='js/angular/angular.min.js')
+    script(src='js/angular/angular-sanitize.js')
+    script(src='js/angular/angular-route.min.js')
+    script(src='js/plugins/oclazyload/dist/ocLazyLoad.min.js')
+    script(src='js/angular-translate/angular-translate.min.js')
+    script(src='js/ui-router/angular-ui-router.min.JS')
+    script(src='js/bootstrap/ui-bootstrap-tpls-1.1.2.min.js')
+    script(src='js/plugins/angular-idle/angular-idle.js')
+    //- script(src='js/plugins/ngclipboard/clipboard.min.js')
+    //- script(src='js/plugins/ngclipboard/ngclipboard.min.js')
+    // Anglar App Script
+    script(src='adminApp.js')
+    script(src='monitor/monitordashboard.js')
+    script(src='monitor/syncsolution.js')
+    script(src='monitor/monthlyreport.js')
+    script(src='adminApp.min.js')

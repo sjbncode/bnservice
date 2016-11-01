@@ -1,0 +1,30 @@
+<html>
+
+<head></head>
+
+<body>
+<script type="text/javascript">
+var request = new XMLHttpRequest();
+var url = "http://localhost:3009/api/synclog";
+request.open('GET', url, true);
+request.onreadystatechange = handler;
+request.send(); 
+
+function handler(evtXHR)
+{
+    if (request.readyState == 4)
+    {
+        if (request.status == 200)
+        {
+            var response = request.response;
+            alert(response);
+            
+        }
+        else
+            alert("Request Errors Occured");
+    }
+}
+</script>
+</body>
+
+</html>
