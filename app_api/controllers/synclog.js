@@ -1,4 +1,4 @@
-var db = require('../models/sqldb');
+var db = require('../config/sql_db');
 var sendJSONresponse = function(res, status, content) {
 	res.status(status);
 	res.json(content);
