@@ -1,6 +1,8 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
+// var db=require('../config/mongo_db');
+// var User = db.userModel;
+var User=mongoose.model('User');
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
@@ -8,7 +10,7 @@ var sendJSONresponse = function(res, status, content) {
 };
 
 module.exports.register = function(req, res) {
-  if(!req.body.username  || !req.body.password) {
+  if (!req.body.username || !req.body.password) {
     sendJSONresponse(res, 400, {
       "message": "All fields required"
     });
@@ -28,7 +30,7 @@ module.exports.register = function(req, res) {
     } else {
       token = user.generateJwt();
       sendJSONresponse(res, 200, {
-        "token" : token
+        "token": token
       });
     }
   });
@@ -36,14 +38,14 @@ module.exports.register = function(req, res) {
 };
 
 module.exports.login = function(req, res) {
-  if(!req.body.username || !req.body.password) {
+  if (!req.body.username || !req.body.password) {
     sendJSONresponse(res, 400, {
       "message": "All fields required"
     });
     return;
   }
 
-  passport.authenticate('local', function(err, user, info){
+  passport.authenticate('local', function(err, user, info) {
     var token;
 
     if (err) {
@@ -51,10 +53,10 @@ module.exports.login = function(req, res) {
       return;
     }
 
-    if(user){
+    if (user) {
       token = user.generateJwt();
       sendJSONresponse(res, 200, {
-        "token" : token
+        "token": token
       });
     } else {
       sendJSONresponse(res, 401, info);
@@ -62,3 +64,14 @@ module.exports.login = function(req, res) {
   })(req, res);
 
 };
+
+module.exports.logout = function(req, res) {
+  if (req.user) {
+    tokenManager.expireToken(req.headers);
+
+    delete req.user;
+    return res.send(200);
+  } else {
+    return res.send(401);
+  }
+}

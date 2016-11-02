@@ -4,12 +4,34 @@
 
 <body>
 <script type="text/javascript">
-var request = new XMLHttpRequest();
-var url = "http://localhost:3009/api/synclog";
-request.open('GET', url, true);
-request.onreadystatechange = handler;
-request.send(); 
+function test2(){
+    var url="http://localhost:3009/api/login";
+    postData(url,{username:'aa',password:'bb'});
+}
 
+function test1(){
+    var url = "http://localhost:3009/api/synclog";
+    getData(url)
+}
+
+function getData(url){
+     var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.onreadystatechange = handler;
+    request.send(); 
+}
+function postData(url,data){
+     var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    request.onreadystatechange = handler;
+    //request.setRequestHeader("CONTENT-TYPE", "application/x-www-form-urlencoded");
+    request.setRequestHeader("CONTENT-TYPE", "application/json; charset=utf-8");
+    //request.setRequestHeader("Content-Length", data.length);
+    request.send(JSON.stringify(data)); 
+}
+function getEncodeURIComponent(arguments) {
+    return encodeURIComponent(arguments);
+}
 function handler(evtXHR)
 {
     if (request.readyState == 4)
@@ -17,11 +39,11 @@ function handler(evtXHR)
         if (request.status == 200)
         {
             var response = request.response;
-            alert(response);
+            console.log(response);
             
         }
         else
-            alert("Request Errors Occured");
+            console.log("Request Errors Occured");
     }
 }
 </script>
