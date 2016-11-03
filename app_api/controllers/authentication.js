@@ -1,13 +1,13 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
-// var db=require('../config/mongo_db');
-// var User = db.userModel;
-var User=mongoose.model('User');
+var tokenManager = require('../config/token_manager')
+var User = mongoose.model('User');
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
   res.json(content);
 };
+// function 
 
 module.exports.register = function(req, res) {
   if (!req.body.username || !req.body.password) {
@@ -70,8 +70,27 @@ module.exports.logout = function(req, res) {
     tokenManager.expireToken(req.headers);
 
     delete req.user;
-    return res.send(200);
+    return sendJSONresponse(res, 200, {
+      message: 'Logout success'
+    });
   } else {
-    return res.send(401);
+    return sendJSONresponse(res, 401, {
+      message: 'unauthenticated'
+    });
   }
+}
+
+module.exports.renew = function(req, res) {
+  User.findById(req.user._id, function(err, user) {
+    if (err) {
+      return sendJSONresponse(res, 401, {
+        message: 'unauthenticated'
+      });
+    } else {
+      var token = user.generateJwt();
+      sendJSONresponse(res, 200, {
+        "token": token
+      });
+    }
+  });
 }

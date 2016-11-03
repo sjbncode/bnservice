@@ -3,31 +3,53 @@
 <head></head>
 
 <body>
-<script type="text/javascript">
-function test2(){
+    <script type="text/javascript">
+var request;
+var token;
+function register(){
+    var url="http://localhost:3009/api/register";
+    postData(url,{username:'aa',password:'bb'});
+}
+function login(){
     var url="http://localhost:3009/api/login";
     postData(url,{username:'aa',password:'bb'});
 }
+function logout(){
+    var url="http://localhost:3009/api/logout";
+    getData(url);
+}
+function renew(){
+    
+    var url="http://localhost:3009/api/renew";
+    getData(url);
+}
+
 
 function test1(){
     var url = "http://localhost:3009/api/synclog";
     getData(url)
 }
-
 function getData(url){
-     var request = new XMLHttpRequest();
+    request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.onreadystatechange = handler;
+     tokenInterceptor(request);
     request.send(); 
 }
 function postData(url,data){
-     var request = new XMLHttpRequest();
+    request = new XMLHttpRequest();
     request.open('POST', url, true);
     request.onreadystatechange = handler;
     //request.setRequestHeader("CONTENT-TYPE", "application/x-www-form-urlencoded");
     request.setRequestHeader("CONTENT-TYPE", "application/json; charset=utf-8");
-    //request.setRequestHeader("Content-Length", data.length);
+    tokenInterceptor(request);
     request.send(JSON.stringify(data)); 
+}
+function tokenInterceptor(r)
+{
+    if(token){
+    r.setRequestHeader('Authorization','Bearer ' + token);        
+    }
 }
 function getEncodeURIComponent(arguments) {
     return encodeURIComponent(arguments);
@@ -38,8 +60,13 @@ function handler(evtXHR)
     {
         if (request.status == 200)
         {
-            var response = request.response;
-            console.log(response);
+
+            console.log(request.response);
+            var response =JSON.parse(request.response);
+            if(response.token)
+            {
+                token=response.token;
+            }
             
         }
         else

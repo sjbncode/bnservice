@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var jwt = require('express-jwt');
-var auth = jwt({
-  secret: process.env.JWT_SECRET,
-  userProperty: 'payload'
-});
+var tokenManager=require('../config/token_manager')
+var auth =[tokenManager.verifyToken
+,jwt({ secret: process.env.JWT_SECRET})] ;
 
 
 
@@ -16,7 +15,6 @@ router.use(function(req, res, next) {
 	res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
 	if ('OPTIONS' == req.method) 
 		return res.send(200);
-	console.log(next);
 	next();
 });
 
@@ -36,5 +34,6 @@ router.post('/register',userCtrl.register);
 router.post('/login',userCtrl.login);
 //Logout
 router.get('/logout', auth, userCtrl.logout); 
+router.get('/renew', auth, userCtrl.renew); 
 
 module.exports = router;
