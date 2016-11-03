@@ -1,5 +1,7 @@
-var sql = require('msnodesqlv8'); //require('msnodesql');
-var conn_str = "Driver={SQL Server Native Client 11.0};Server={agprolst01};Database={CLIMS};Trusted_Connection={Yes}";
+var sqldb=function(conn_str){
+	var sql = require('msnodesqlv8'); 
+//var
+ conn_str =conn_str|| process.env.SQL_CON;
 
 //open database  
 sql.open(conn_str, function(err, conn) {
@@ -63,7 +65,15 @@ function toJson(dt, tbName) {
 	return results;
 }
 
-exports.add = add;
-exports.del = del;
-exports.update = update;
-exports.select = select;
+return{
+	select:select,
+	del:del,
+	update:update,
+	add:add,
+}
+}
+module.exports=sqldb;
+// exports.add = add;
+// exports.del = del;
+// exports.update = update;
+// exports.select = select;
