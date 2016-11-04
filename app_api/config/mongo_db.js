@@ -43,5 +43,4 @@ process.on('SIGTERM', function() {
 });
 
 // BRING IN YOUR SCHEMAS & MODELS
-//require('../models/locations');
-require('../models/user');
+require('../models');

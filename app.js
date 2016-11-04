@@ -11,8 +11,8 @@ require('./app_api/config/mongo_db');
 require('./app_api/config/passport');
 
 //routes
-var api_route=require('./app_api/routes/index');
-//var server_route=require('./app_server/routes/index');
+var api_route=require('./app_api/routes');
+//var server_route=require('./app_server/routes');
 
 var app = express();
 //disable 
