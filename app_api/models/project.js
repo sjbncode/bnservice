@@ -13,7 +13,7 @@ var projectSchema=new mongoose.Schema({
   status:String,
   comments:String,
   EstimatedFinishDate:Date,
-  updatedtime: { type: Date, default: Date.now }
+  updatedtime: { type: Date, default: Date.now },
   created: { type: Date, default: Date.now }
 });
 
